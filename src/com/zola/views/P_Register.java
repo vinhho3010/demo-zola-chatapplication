@@ -4,13 +4,14 @@ import com.zola.event.EventMessage;
 import com.zola.event.PublicEvent;
 import com.zola.model.Model_Message;
 import com.zola.model.Model_Register;
+import java.awt.Color;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class P_Register extends javax.swing.JPanel {
-private String Avatar = "";
+private String Avatar = "/com/zola/icon/user.png";
     public P_Register() {
         initComponents();
     }
@@ -193,8 +194,12 @@ private String Avatar = "";
             txtUser.grabFocus();
         } else if (password.equals("")) {
             txtPass.grabFocus();
-        } else if (!password.equals(confirmPassword)) {
+        }else if(password.length()<8){
             txtPass.grabFocus();
+            JOptionPane.showMessageDialog(null, "Password at least 8 characters", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }else if (!password.equals(confirmPassword)) {
+            txtPass.grabFocus();
+            JOptionPane.showMessageDialog(null, "Passwords must be same!!!", "Message", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Model_Register data = new Model_Register(userName, password, gender, AvatarPath);
             PublicEvent.getInstance().getEventLogin().register(data, new EventMessage() {
@@ -202,6 +207,7 @@ private String Avatar = "";
                 public void callMessage(Model_Message message) {
                     if (!message.isAction()) {
                         lbError.setText(message.getMessage());
+                        lbError.setForeground(Color.red);
                     } else {
                         PublicEvent.getInstance().getEventMain().initChat();
                     }
@@ -228,8 +234,12 @@ private String Avatar = "";
                         JOptionPane.showMessageDialog(null, "Successfully chosen image at \n" + Avatar,"Message",
                                 JOptionPane.INFORMATION_MESSAGE);
                         lbError.setText("Path: " + Avatar);
+                        lbError.setForeground(Color.black);
                     }
-                    else return;
+                    else{
+                        Avatar = "/com/zola/icon/user.png";
+                        return;
+                    }
     }//GEN-LAST:event_btn_chooseAvatarActionPerformed
 
 
