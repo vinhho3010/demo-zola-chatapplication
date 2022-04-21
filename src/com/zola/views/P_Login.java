@@ -114,6 +114,7 @@ public class P_Login extends javax.swing.JPanel {
     private void cmdLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLoginActionPerformed
         String user = txtUser.getText().trim();
         String password = String.valueOf(txtPass.getPassword());
+        
         PublicEvent.getInstance().getEventLogin().login(new Model_Login(user, password));
     }//GEN-LAST:event_cmdLoginActionPerformed
 
